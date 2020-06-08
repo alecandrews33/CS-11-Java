@@ -1,0 +1,256 @@
+<html>
+<head>
+  <title>CS11 Java - Lab 1</title>
+</head>
+
+<body>
+  <h2>Java Lab 1:  Diving Right In</h2>
+
+  <p>
+    Java lets us program with <i>objects</i>.  We use <i>classes</i>, one per
+    file, to describe how these objects work -- a blueprint, if you will.  Here
+    is the code for a simple class that represents a two-dimensional point:
+  </p>
+
+<pre>
+/**
+ * A two-dimensional point class.
+ */
+public class Point2d {
+    
+    /** X coordinate of the point */
+    private double xCoord;
+    
+    /** Y coordinate of the point */
+    private double yCoord;
+
+    /** Constructor to initialize point to (x, y) value. */
+    public Point2d(double x, double y) {
+        xCoord = x;
+        yCoord = y;
+    }
+
+    /** No-argument constructor:  defaults to a point at the origin. */
+    public Point2d() {
+        // Call two-argument constructor and specify the origin.
+        this(0, 0);
+    }
+
+    /** Return the X coordinate of the point. */
+    public double getX() {
+        return xCoord;
+    }
+
+    /** Return the Y coordinate of the point. */
+    public double getY() {
+        return yCoord;
+    }
+
+    /** Set the X coordinate of the point. */
+    public void setX(double val) {
+        xCoord = val;
+    }
+
+    /** Set the Y coordinate of the point. */
+    public void setY(double val) {
+        yCoord = val;
+    }
+}
+</pre>
+
+  <p>
+    This code <i>must</i> be saved in a file called
+    <a href="Point2d.java"><tt>Point2d.java</tt></a>, due to Java's
+    requirements on class names and file names.  A copy of this file is
+    provided for your consumption; you might save a copy of it to your working
+    directory and build off of it for this lab.
+  </p>
+
+  <p>
+    Recall that we can <i>instantiate</i> our class anywhere else in our code by
+    calling any of the constructors we've defined, like so:
+  </p>
+
+<pre>
+    Point2d myPoint = new Point2d();            // creates a point at (0,0)
+    Point2d myOtherPoint = new Point2d(5,3);    // creates a point at (5,3)
+    Point2d aThirdPoint = new Point2d();
+</pre>
+
+  <p>
+    Be careful:  <tt>myPoint <b>!=</b> aThirdPoint</tt>, even though their
+    values are the same!  This is because the equality operator <tt>==</tt> (and
+    its inverse, the inequality operator <tt>!=</tt>) compare the two object
+    <i>references</i> for equality.  In other words, <tt>==</tt> returns true if
+    the two references point to the <i>same</i> object.  In this code,
+    <tt>myPoint</tt> and <tt>aThirdPoint</tt> each refers to a different
+    instance of the <tt>Point2d</tt> class, so <tt>myPoint == aThirdPoint</tt>
+    returns <tt>false</tt>, even though their values are the same!
+  </p>
+
+  <p>
+    To test for value-equality and not reference-equality, we define a method of
+    the <tt>Point2d</tt> class called <tt>equals</tt>, which takes another
+    <tt>Object</tt> as an argument, and performs the appropriate tests for
+    equality.  Remember that the object being compared must be the correct
+    type, and its member-fields must have the same values as well.
+  </p>
+
+<h3>Before you start coding away...</h3>
+
+<p>
+  Coding style is very important in any software project that you work on.
+  Believe it or not, the <em>vast majority</em> of a successful program's
+  lifetime is spent in the debugging and maintenance phases.  In these phases
+  of a product's lifecycle, well-documented and readable code becomes a huge
+  asset, saving massive amounts of time.
+</p>
+
+<p>
+  Unfortunately, the value of good coding style is often learned only through
+  painful experience...  But, CS11 is a good opportunity to learn and practice
+  good coding style.  Before you start on this assignment, review the
+  <a href="../javastyle.html">CS11 Java Style Guidelines</a>.  There is even a
+  helpful style-checker on the CS cluster, that will report any issues with
+  your program.
+</p>
+
+<h3>Your task:</h3>
+
+<ol>
+  <li>
+    <p>
+      Create a new class <tt>Point3d</tt> to represent, you guessed it, points
+      in three dimensional Euclidean space.  It should be possible to:
+
+      <ul>
+        <li>
+          <p>
+            create a new <tt>Point3d</tt> described by any three floating-point
+            (type <tt>double</tt>) values,
+          </p>
+        </li>
+
+        <li>
+          <p>
+            create a new <tt>Point3d</tt> at (0.0, 0.0, 0.0) by default,
+          </p>
+        </li>
+
+        <li>
+          <p>
+            access and mutate all three values individually, and
+          </p>
+        </li>
+
+        <li>
+          <p>
+            compare two <tt>Point3d</tt>s for value-equality using an
+            appropriate <tt>equals</tt> method.
+          </p>
+        </li>
+      </ul>
+    </p>
+    <p>
+      It should <u>not</u> be possible to directly access the internal data
+      members of any <tt>Point3d</tt> object.
+    </p>
+  </li>
+
+  <li>
+    <p>
+      Furthermore, add a new method <tt>distanceTo</tt> which takes another
+      <tt>Point3d</tt> as an argument, and computes a double-precision
+      floating-point approximation of the straight-line distance between the
+      two points, and returns that value.
+    </p>
+  </li>
+
+  <li>
+    <p>
+      Create a second class called <tt>Lab1</tt> that exists primarily to house
+      the static method <tt>main</tt>.  Remember that <tt>main</tt> must be
+      <tt>public</tt>, have a <tt>void</tt> return type, and accept an array of
+      <tt>String</tt>s as an argument.  Inside this class, add some
+      functionality:
+
+      <ul>
+        <li>
+          <p>
+            Input three ordered triples from the user, each representing the
+            coordinates of one point in 3-space.  Generate three
+            <tt>Point3d</tt> objects from this data.  (For now, you can assume
+            that the user will not enter invalid data.)
+          </p>
+          <p>
+            If you don't know how to get input from the user, you can use the
+            function in <a href="inp.java">this file</a>.  Put it as a static
+            method in your <tt>Lab1</tt> class.  Note that this method uses
+            classes in the <tt>java.io</tt> package, which is not visible to
+            your code by default.  To make it visible, add this to the very top
+            of your file:
+
+            <pre>    import java.io.*;</pre>
+
+            This makes all classes in the <tt>java.io</tt> package visible to
+            your <tt>Lab1</tt> code.  (You don't have to do this with the
+            classes in the <tt>java.lang</tt> package, since those are made
+            available to your classes by default.)
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Write a second static method <tt>computeArea</tt> which takes three
+            <tt>Point3d</tt>'s and computes the area within the triangle bounded
+            by them.  (You may wish to use
+            <a href="http://en.wikipedia.org/wiki/Heron%27s_formula">Heron's
+            formula</a>.)  Return this area as a <tt>double</tt>.
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Use the data and code you gathered and wrote above to determine the
+	    area and print that out for the user's consumption.
+	  </p>
+	  <p>
+	    <em>Before</em> you call <tt>computeArea</tt>, however, test for
+	    value equality between all of the three <tt>Point3d</tt>'s.  If
+	    any pair of points is "equal", report this to the user and do not
+	    compute an area.
+          </p>
+        </li>
+      </ul>
+    </p>
+  </li>
+
+  <li>
+    <p>
+      Compile both of your source files together:
+
+      <pre>    javac Point3d.java Lab1.java</pre>
+
+      and then run your <tt>Lab1</tt> program, testing it with several sample
+      triangles.
+    </p>
+  </li>
+
+  <li>
+    <p>
+      When you are finished with lab 1, you can submit your files on the
+      <a href="https://csman.cs.caltech.edu">csman website</a>.
+    </p>
+  </li>
+</ol>
+
+<hr />
+[end lab 1]
+<font size="-1">
+  Updated January 20, 2013.
+  Copyright (C) 2005-2013, California Institute of Technology
+</font>
+
+</body>
+</html>
+
